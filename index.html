@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Be My Valentine?</title>
+
+    <!-- Fonts (same vibe as your reference) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Quicksand:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        color-scheme: light;
+        --rose: #f8b6c4;
+        --rose-deep: #f06c9b;
+        --rose-dark: #d65285;
+        --cream: #fff4f7;
+        --ink: #3a1420;
+        --ink-soft: #5c2b3a;
+        --shadow: rgba(208, 74, 116, 0.25);
+        --glass: rgba(255, 255, 255, 0.82);
+        --glass-border: rgba(240, 108, 155, 0.2);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Quicksand", sans-serif;
+        background: radial-gradient(circle at top, #fff8fb 0%, #ffe4ee 45%, #ffd0e1 100%);
+        color: var(--ink);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 16px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* Floating hearts field (your reference) */
+      .heartfield {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .heart {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        background: var(--rose-deep);
+        transform: rotate(45deg);
+        animation: float 10s infinite ease-in;
+        opacity: 0.35;
+      }
+      .heart::before,
+      .heart::after {
+        content: "";
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--rose-deep);
+      }
+      .heart::before { left: -9px; }
+      .heart::after { top: -9px; }
+
+      /* A few hearts with varied timings */
+      .heart:nth-child(1) { left: 10%; animation-duration: 11s; }
+      .heart:nth-child(2) { left: 25%; animation-duration: 9s; animation-delay: 1s; }
+      .heart:nth-child(3) { left: 40%; animation-duration: 13s; animation-delay: 0.5s; }
+      .heart:nth-child(4) { left: 55%; animation-duration: 10s; animation-delay: 1.8s; }
+      .heart:nth-child(5) { left: 70%; animation-duration: 12s; animation-delay: 0.8s; }
+      .heart:nth-child(6) { left: 82%; animation-duration: 9.5s; animation-delay: 1.2s; }
+      .heart:nth-child(7) { left: 15%; animation-duration: 14s; animation-delay: 0.3s; }
+      .heart:nth-child(8) { left: 62%; animation-duration: 11.5s; animation-delay: 1.1s; }
+
+      @keyframes float {
+        0% { transform: translateY(110vh) rotate(45deg) scale(0.9); opacity: 0; }
+        30% { opacity: 0.35; }
+        100% { transform: translateY(-20vh) rotate(45deg) scale(1.1); opacity: 0; }
+      }
+
+      /* Floating face particles (same "dimension" feel as hearts; respects transparent PNG/WebP) */
+      .face-float {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 0; /* same layer as hearts */
+      }
+
+      .face {
+        position: absolute;
+        width: clamp(70px, 10vw, 140px);
+        aspect-ratio: 1/1;
+        border-radius: 999px;
+        overflow: hidden;
+        background: transparent; /* do NOT add white behind */
+        border: 1px solid rgba(240, 108, 155, 0.22);
+        box-shadow: 0 18px 44px rgba(208, 74, 116, 0.18);
+        opacity: 0;
+        will-change: transform, opacity;
+        animation: faceFloat linear forwards;
+        filter: saturate(1.02);
+      }
+
+      .face img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* keeps your cutout clean */
+        display: block;
+        background: transparent;
+      }
+
+	@keyframes faceFloat {
+	 0%   { transform: translateY(110vh) rotate(0deg) scale(0.92); opacity: 0; }
+	 10%  { opacity: 0.55; }
+	 70%  { opacity: 0.80; }
+	 100% { transform: translateY(45vh) rotate(6deg) scale(1.04); opacity: 0; } /* stops around mid-page */
+	}
+
+
+      .card {
+        position: relative;
+        width: min(900px, 100%);
+        background: var(--glass);
+        border-radius: 32px;
+        box-shadow: 0 24px 70px var(--shadow);
+        padding: clamp(28px, 5vw, 52px);
+        text-align: center;
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--glass-border);
+        z-index: 2;
+        overflow: hidden;
+      }
+
+      /* subtle shimmer */
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: -40%;
+        background:
+          radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.6), transparent 35%),
+          radial-gradient(circle at 70% 65%, rgba(240, 108, 155, 0.2), transparent 45%);
+        opacity: 0.55;
+        transform: rotate(8deg);
+        pointer-events: none;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 8px 18px;
+        border-radius: 999px;
+        background: rgba(240, 108, 155, 0.15);
+        color: var(--rose-dark);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-size: 0.7rem;
+        font-weight: 600;
+        margin-bottom: 16px;
+        position: relative;
+      }
+
+      h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        margin: 0 0 12px;
+        color: var(--ink);
+        position: relative;
+      }
+
+      .subtitle {
+        margin: 0 auto 24px;
+        max-width: 560px;
+        font-size: 1.05rem;
+        color: var(--ink-soft);
+        position: relative;
+      }
+
+      /* Buttons */
+      .actions {
+        position: relative;
+        height: 110px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        margin-top: 10px;
+      }
+
+      .btn {
+        border: none;
+        font-size: 1.05rem;
+        font-weight: 600;
+        padding: 14px 34px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-family: "Quicksand", sans-serif;
+        transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+        position: relative;
+        outline: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* keep both buttons centered next to each other on first load */
+      .btn.no {
+        position: relative;
+      }
+
+      /* once escaping starts, we switch NO to absolute positioning */
+      .btn.no.is-escape {
+        position: absolute;
+      }
+
+      .btn:focus-visible {
+        box-shadow: 0 0 0 3px rgba(240, 108, 155, 0.22), 0 18px 40px var(--shadow);
+      }
+
+      /* YES grows while hovering (capped), plus cute flowers in corners */
+      .btn.yes {
+        --grow: 1;
+        background: linear-gradient(135deg, var(--rose-deep), #ff8bb7);
+        color: #fff;
+        box-shadow: 0 12px 24px rgba(240, 108, 155, 0.4);
+        transform: scale(var(--grow));
+        transform-origin: center;
+        animation: yesPulse 2.4s ease-in-out infinite;
+        isolation: isolate;
+        overflow: visible; /* allow corner photos to expand outward */
+      }
+
+      /* 4 corner mini photos */
+      .mini-photos {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 4; /* above button */
+        overflow: visible;
+      }
+
+      .mini-photos .mini {
+        --s: 26%;
+        position: absolute;
+        width: var(--s);
+        aspect-ratio: 1/1;
+        border-radius: 999px;
+        overflow: hidden;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.55);
+        box-shadow: 0 14px 26px rgba(208, 74, 116, 0.22);
+        opacity: 0;
+        transform: scale(0.65);
+        transform-origin: center;
+        transition: opacity 180ms ease, transform 280ms cubic-bezier(.2,.9,.2,1);
+        will-change: transform, opacity;
+      }
+
+      .mini-photos .mini img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        background: transparent;
+      }
+
+      /* Place them at the 4 corners of the button */
+      .mini-photos .tl { left: 0; top: 0; }
+      .mini-photos .tr { right: 0; top: 0; }
+      .mini-photos .bl { left: 0; bottom: 0; }
+      .mini-photos .br { right: 0; bottom: 0; }
+
+      /* Show them on hover/focus and push them away from the button */
+      .btn.yes:hover .mini-photos .mini,
+      .btn.yes:focus-visible .mini-photos .mini,
+      .btn.yes.is-growing .mini-photos .mini {
+        opacity: 0.98;
+      }
+
+      /* Clock-rotations:
+         TR = 1:30  -> 45deg
+         BR = 4:30  -> 135deg
+         BL = 7:30  -> 225deg
+         TL = 10:30 -> 315deg
+      */
+      .btn.yes:hover .mini-photos .tr,
+      .btn.yes:focus-visible .mini-photos .tr,
+      .btn.yes.is-growing .mini-photos .tr {
+        transform: translate(55%, -55%) rotate(45deg) scale(1.06);
+      }
+      .btn.yes:hover .mini-photos .br,
+      .btn.yes:focus-visible .mini-photos .br,
+      .btn.yes.is-growing .mini-photos .br {
+        transform: translate(55%, 55%) rotate(135deg) scale(1.06);
+      }
+      .btn.yes:hover .mini-photos .bl,
+      .btn.yes:focus-visible .mini-photos .bl,
+      .btn.yes.is-growing .mini-photos .bl {
+        transform: translate(-55%, 55%) rotate(225deg) scale(1.06);
+      }
+      .btn.yes:hover .mini-photos .tl,
+      .btn.yes:focus-visible .mini-photos .tl,
+      .btn.yes.is-growing .mini-photos .tl {
+        transform: translate(-55%, -55%) rotate(315deg) scale(1.06);
+      }
+
+      /* the flowers */
+      .btn.yes .flowers {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 2;
+      }
+      .btn.yes .flowers::before,
+      .btn.yes .flowers::after {
+        content: "";
+        position: absolute;
+        width: 64px;
+        height: 64px;
+        opacity: 0.0;
+        transform: scale(0.75);
+        transition: opacity 260ms ease, transform 320ms ease;
+        filter: drop-shadow(0 10px 18px rgba(208, 74, 116, 0.22));
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+      /* bottom-left blossom + vine */
+      .btn.yes .flowers::before {
+        left: -18px;
+        bottom: -18px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cdefs%3E%3CradialGradient id='p' cx='40%25' cy='40%25' r='70%25'%3E%3Cstop offset='0' stop-color='%23fff4f7'/%3E%3Cstop offset='0.6' stop-color='%23ff8bb7'/%3E%3Cstop offset='1' stop-color='%23f06c9b'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath d='M18 92c22-8 34-24 44-46 10-22 22-34 44-44' fill='none' stroke='%23d65285' stroke-width='5' stroke-linecap='round' opacity='0.55'/%3E%3Ccircle cx='42' cy='70' r='12' fill='url(%23p)' opacity='0.95'/%3E%3Ccircle cx='30' cy='78' r='9' fill='url(%23p)' opacity='0.8'/%3E%3Ccircle cx='52' cy='62' r='9' fill='url(%23p)' opacity='0.8'/%3E%3C/svg%3E");
+      }
+      /* top-right blossom */
+      .btn.yes .flowers::after {
+        right: -18px;
+        top: -18px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cdefs%3E%3CradialGradient id='p' cx='40%25' cy='40%25' r='70%25'%3E%3Cstop offset='0' stop-color='%23fff4f7'/%3E%3Cstop offset='0.6' stop-color='%23ff8bb7'/%3E%3Cstop offset='1' stop-color='%23f06c9b'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath d='M102 28C80 36 68 52 58 74 48 96 36 108 14 116' fill='none' stroke='%23d65285' stroke-width='5' stroke-linecap='round' opacity='0.45'/%3E%3Ccircle cx='78' cy='50' r='12' fill='url(%23p)' opacity='0.95'/%3E%3Ccircle cx='88' cy='40' r='9' fill='url(%23p)' opacity='0.8'/%3E%3Ccircle cx='68' cy='60' r='9' fill='url(%23p)' opacity='0.8'/%3E%3C/svg%3E");
+      }
+
+      /* show flowers when hovering/focusing (and also while growing) */
+      .btn.yes:hover .flowers::before,
+      .btn.yes:hover .flowers::after,
+      .btn.yes:focus-visible .flowers::before,
+      .btn.yes:focus-visible .flowers::after,
+      .btn.yes.is-growing .flowers::before,
+      .btn.yes.is-growing .flowers::after {
+        opacity: 0.92;
+        transform: scale(1);
+      }
+
+      .btn.yes:hover,
+      .btn.yes:focus-visible {
+        filter: brightness(1.02);
+        box-shadow: 0 16px 30px rgba(240, 108, 155, 0.5);
+      }
+
+      @keyframes yesPulse {
+        0%, 100% { filter: saturate(1); }
+        50% { filter: saturate(1.08); }
+      }
+
+      /* NO button styling (position switches to absolute after escape arms) */
+      .btn.no {
+        background: #fff;
+        color: var(--rose-dark);
+        border: 2px solid rgba(240, 108, 155, 0.35);
+        box-shadow: 0 10px 20px rgba(240, 108, 155, 0.2);
+      }
+
+      .love-note {
+        margin-top: 22px;
+        background: rgba(248, 182, 196, 0.2);
+        border-radius: 24px;
+        padding: 20px 24px;
+        animation: floatIn 0.6s ease forwards;
+      }
+
+      .love-note h2 {
+        font-family: "Playfair Display", serif;
+        margin: 0 0 8px;
+        font-size: 1.5rem;
+        color: var(--ink);
+      }
+
+      .love-note p {
+        margin: 0;
+        color: var(--ink-soft);
+        line-height: 1.55;
+        font-size: 1.05rem;
+      }
+
+      /* (tip removed) */
+
+      @keyframes floatIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      @media (max-width: 600px) {
+        .actions { height: 140px; }
+        .btn { font-size: 0.95rem; padding: 13px 26px; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Background hearts -->
+    <div class="heartfield" aria-hidden="true">
+      <span class="heart"></span>
+      <span class="heart"></span>
+      <span class="heart"></span>
+      <span class="heart"></span>
+      <span class="heart"></span>
+      <span class="heart"></span>
+      <span class="heart"></span>
+      <span class="heart"></span>
+    </div>
+
+    <!-- Floating face particles (spawned by JS; same layer as hearts) -->
+    <div class="face-float" aria-hidden="true" id="facefield"></div>
+
+    <main class="card" role="main">
+      <p class="badge">HBIIIIIIIBAAAAAAAAAAAAAAAAAAA DYAAAAAAAAAAALI</p>
+      <h1>Would you be my Valentine?</h1>
+      <!-- subtitle deleted -->
+
+      <section class="actions" aria-label="Valentine response">
+        <button class="btn yes" type="button">
+          Yes 💗
+          <span class="flowers" aria-hidden="true"></span>
+
+          <!-- 4 corner mini photos (1/4-ish button size). Uses your resources image -->
+          <span class="mini-photos" aria-hidden="true">
+            <span class="mini tl"><img src="resources/her-face.png" alt="" /></span>
+            <span class="mini tr"><img src="resources/her-face.png" alt="" /></span>
+            <span class="mini bl"><img src="resources/her-face.png" alt="" /></span>
+            <span class="mini br"><img src="resources/her-face.png" alt="" /></span>
+          </span>
+        </button>
+        <button class="btn no" type="button">No 🙃</button>
+      </section>
+
+      <section class="love-note" aria-live="polite" hidden>
+        <h2>Hey hbiba</h2>
+        <p>
+          Awwww you accepted to be my valentine... like you had a choice hhhhh<br />
+          I hardly love you a hbiba
+        </p>
+      </section>
+    </main>
+
+    <script>
+      // === Configure your face image here ===
+      // Use a transparent PNG/WebP if you removed the background.
+      // If your file is .jpg, change FACE_SRC accordingly.
+      const FACE_SRC = 'resources/her-face.png';
+
+      // Spawn face particles like hearts (same dimension/feeling)
+      const facefield = document.getElementById('facefield');
+
+      function createFaceImg() {
+        const img = document.createElement('img');
+        img.src = FACE_SRC;
+        img.alt = '';
+        // graceful fallback if someone keeps a .jpg name instead
+        img.onerror = () => {
+          if (!img.dataset.fallbackTried) {
+            img.dataset.fallbackTried = '1';
+            img.src = 'resources/her-face.jpg';
+          }
+        };
+        return img;
+      }
+
+      function spawnFace() {
+  	if (!facefield) return;
+
+  	const d = document.createElement('div');
+  	d.className = 'face';
+  	d.appendChild(createFaceImg());
+
+  	const left = Math.random() * 100;
+
+  // ✅ last longer (increase duration range)
+  const dur = 25 + Math.random() * 14;   // ~22s to 36s (longer than before)
+  const delay = 0;     // slightly smaller delay so they start sooner
+  const size = 66 + Math.random() * 68;
+
+  	d.style.left = left + 'vw';
+  	d.style.bottom = (-20 - Math.random() * 30) + 'px';
+  	d.style.width = size + 'px';
+  	d.style.animationDuration = dur + 's';
+  	d.style.animationDelay = delay + 's';
+
+  	facefield.appendChild(d);
+  	setTimeout(() => d.remove(), (dur + delay) * 1000 + 300);
+	}
+
+// ✅ appear more often (decrease interval)
+for (let i = 0; i < 10; i++) spawnFace();     // was 3
+setInterval(spawnFace, 650);                 // was 1400
+
+
+      // kick off faces
+      for (let i = 0; i < 3; i++) spawnFace();
+      setInterval(spawnFace, 1400);
+
+      const noButton = document.querySelector('.btn.no');
+      const yesButton = document.querySelector('.btn.yes');
+      const actions = document.querySelector('.actions');
+      const loveNote = document.querySelector('.love-note');
+
+      // YES: grow while hovered (capped), and show flowers while growing.
+      // This is a continuous growth (not just a one-time animation).
+      const GROW_MAX = 1.22;     // cap
+      const GROW_STEP = 0.008;   // per tick
+      const GROW_TICK_MS = 16;   // ~60fps
+
+      let grow = 1;
+      let growTimer = null;
+
+      function setYesGrow(value) {
+        grow = Math.max(1, Math.min(GROW_MAX, value));
+        yesButton.style.setProperty('--grow', grow.toFixed(3));
+        if (grow > 1.03) yesButton.classList.add('is-growing');
+        else yesButton.classList.remove('is-growing');
+      }
+
+      function startGrowing() {
+        if (growTimer) return;
+        growTimer = setInterval(() => {
+          setYesGrow(grow + GROW_STEP);
+          // tiny extra saturation as it grows
+          yesButton.style.filter = `brightness(1.02) saturate(${1 + (grow - 1) * 0.8})`;
+        }, GROW_TICK_MS);
+      }
+
+      function stopGrowing() {
+        if (!growTimer) return;
+        clearInterval(growTimer);
+        growTimer = null;
+        // ease back to normal
+        const back = setInterval(() => {
+          if (grow <= 1.001) {
+            clearInterval(back);
+            setYesGrow(1);
+            yesButton.style.filter = '';
+            return;
+          }
+          setYesGrow(grow - 0.012);
+        }, 16);
+      }
+
+      yesButton.addEventListener('mouseenter', startGrowing);
+      yesButton.addEventListener('mouseleave', stopGrowing);
+      yesButton.addEventListener('focus', startGrowing);
+      yesButton.addEventListener('blur', stopGrowing);
+
+      // NO: smarter escape so it never gets stuck in corners.
+      // Strategy: attempt multiple candidate positions and pick the one FARTHER from the pointer,
+      // while always staying inside bounds with padding.
+      function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+
+      function armNoEscape() {
+        // Switch to absolute while keeping the same on-screen position,
+        // so the first load shows YES/NO centered side-by-side.
+        if (noButton.classList.contains('is-escape')) return;
+
+        const a = actions.getBoundingClientRect();
+        const b = noButton.getBoundingClientRect();
+
+        noButton.classList.add('is-escape');
+        // lock width so layout doesn't jump
+        noButton.style.width = `${b.width}px`;
+
+        // position relative to actions
+        noButton.style.left = `${b.left - a.left}px`;
+        noButton.style.top = `${b.top - a.top}px`;
+      }
+
+      function moveNoButton(pointerClientX, pointerClientY) {
+        armNoEscape();
+
+        const bounds = actions.getBoundingClientRect();
+        const buttonBounds = noButton.getBoundingClientRect();
+
+        // padding so it doesn't "kiss" the edges and get stuck
+        const pad = 10;
+        const maxX = bounds.width - buttonBounds.width - pad * 2;
+        const maxY = bounds.height - buttonBounds.height - pad * 2;
+
+        // pointer position in actions coords (fallback: center)
+        const px = (typeof pointerClientX === 'number') ? (pointerClientX - bounds.left) : bounds.width / 2;
+        const py = (typeof pointerClientY === 'number') ? (pointerClientY - bounds.top) : bounds.height / 2;
+
+        let best = { x: 0, y: 0, score: -Infinity };
+
+        // Try a few random spots and keep the farthest from the pointer
+        for (let i = 0; i < 14; i++) {
+          const rx = pad + Math.random() * Math.max(0, maxX);
+          const ry = pad + Math.random() * Math.max(0, maxY);
+          const bx = rx + buttonBounds.width / 2;
+          const by = ry + buttonBounds.height / 2;
+          const dist = Math.hypot(bx - px, by - py);
+
+          // prefer not-too-close and also avoid being near edges
+          const edgePenalty =
+            (Math.min(rx, (pad + maxX) - rx) / (pad + maxX + 0.001)) +
+            (Math.min(ry, (pad + maxY) - ry) / (pad + maxY + 0.001));
+
+          const score = dist + edgePenalty * 40;
+          if (score > best.score) best = { x: rx, y: ry, score };
+        }
+
+        // In rare cases (tiny screens) maxX/maxY can be 0/negative; clamp safely
+        const finalX = clamp(best.x, pad, pad + Math.max(0, maxX));
+        const finalY = clamp(best.y, pad, pad + Math.max(0, maxY));
+
+        noButton.style.left = `${finalX}px`;
+        noButton.style.top = `${finalY}px`;
+
+        noButton.animate(
+          [
+            { transform: 'translateZ(0) rotate(0deg)' },
+            { transform: 'translateZ(0) rotate(-7deg)' },
+            { transform: 'translateZ(0) rotate(6deg)' },
+            { transform: 'translateZ(0) rotate(0deg)' },
+          ],
+          { duration: 260, easing: 'ease-out' }
+        );
+      }
+
+      // Escape when you get close (prevents corner-stuck feeling)
+      actions.addEventListener('mousemove', (e) => {
+        if (!loveNote.hidden) return;
+        const bounds = actions.getBoundingClientRect();
+        const b = noButton.getBoundingClientRect();
+        const bx = b.left + b.width / 2;
+        const by = b.top + b.height / 2;
+        const dist = Math.hypot(bx - e.clientX, by - e.clientY);
+        if (dist < 130) moveNoButton(e.clientX, e.clientY);
+      });
+
+      noButton.addEventListener('mouseenter', (e) => {
+        if (!loveNote.hidden) return;
+        moveNoButton(e.clientX, e.clientY);
+      });
+      noButton.addEventListener('click', (e) => {
+        if (!loveNote.hidden) return;
+        moveNoButton(e.clientX, e.clientY);
+      });
+      noButton.addEventListener('focus', () => {
+        if (!loveNote.hidden) return;
+        moveNoButton();
+      });
+
+      // mobile touch: dodge
+      noButton.addEventListener('touchstart', (e) => {
+        if (!loveNote.hidden) return;
+        e.preventDefault();
+        const t = e.touches && e.touches[0];
+        moveNoButton(t?.clientX, t?.clientY);
+      }, { passive: false });
+
+      window.addEventListener('load', () => {
+        // IMPORTANT: do NOT move the NO button on first load.
+        // Keep both buttons centered next to each other.
+        setYesGrow(1);
+      });
+      window.addEventListener('resize', () => moveNoButton());
+
+      function activateLoveNote() {
+        loveNote.hidden = false;
+        actions.style.display = 'none';
+        // stop growth loop cleanly
+        stopGrowing();
+      }
+
+      yesButton.addEventListener('click', activateLoveNote);
+    </script>
+  </body>
+</html>
