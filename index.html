@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Be My Valentine?</title>
 
-    <!-- Fonts (same vibe as your reference) -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -43,7 +43,7 @@
         position: relative;
       }
 
-      /* Floating hearts field (your reference) */
+      /* Floating hearts field */
       .heartfield {
         position: fixed;
         inset: 0;
@@ -72,7 +72,6 @@
       .heart::before { left: -9px; }
       .heart::after { top: -9px; }
 
-      /* A few hearts with varied timings */
       .heart:nth-child(1) { left: 10%; animation-duration: 11s; }
       .heart:nth-child(2) { left: 25%; animation-duration: 9s; animation-delay: 1s; }
       .heart:nth-child(3) { left: 40%; animation-duration: 13s; animation-delay: 0.5s; }
@@ -88,13 +87,13 @@
         100% { transform: translateY(-20vh) rotate(45deg) scale(1.1); opacity: 0; }
       }
 
-      /* Floating face particles (same "dimension" feel as hearts; respects transparent PNG/WebP) */
+      /* Floating face particles */
       .face-float {
         position: fixed;
         inset: 0;
         overflow: hidden;
         pointer-events: none;
-        z-index: 0; /* same layer as hearts */
+        z-index: 0;
       }
 
       .face {
@@ -103,7 +102,7 @@
         aspect-ratio: 1/1;
         border-radius: 999px;
         overflow: hidden;
-        background: transparent; /* do NOT add white behind */
+        background: transparent;
         border: 1px solid rgba(240, 108, 155, 0.22);
         box-shadow: 0 18px 44px rgba(208, 74, 116, 0.18);
         opacity: 0;
@@ -115,18 +114,17 @@
       .face img {
         width: 100%;
         height: 100%;
-        object-fit: contain; /* keeps your cutout clean */
+        object-fit: contain;
         display: block;
         background: transparent;
       }
 
-	@keyframes faceFloat {
-	 0%   { transform: translateY(110vh) rotate(0deg) scale(0.92); opacity: 0; }
-	 10%  { opacity: 0.55; }
-	 70%  { opacity: 0.80; }
-	 100% { transform: translateY(45vh) rotate(6deg) scale(1.04); opacity: 0; } /* stops around mid-page */
-	}
-
+      @keyframes faceFloat {
+        0%   { transform: translateY(110vh) rotate(0deg) scale(0.92); opacity: 0; }
+        10%  { opacity: 0.55; }
+        70%  { opacity: 0.80; }
+        100% { transform: translateY(45vh) rotate(6deg) scale(1.04); opacity: 0; }
+      }
 
       .card {
         position: relative;
@@ -142,7 +140,6 @@
         overflow: hidden;
       }
 
-      /* subtle shimmer */
       .card::before {
         content: "";
         position: absolute;
@@ -177,14 +174,6 @@
         position: relative;
       }
 
-      .subtitle {
-        margin: 0 auto 24px;
-        max-width: 560px;
-        font-size: 1.05rem;
-        color: var(--ink-soft);
-        position: relative;
-      }
-
       /* Buttons */
       .actions {
         position: relative;
@@ -211,21 +200,13 @@
         -webkit-tap-highlight-color: transparent;
       }
 
-      /* keep both buttons centered next to each other on first load */
-      .btn.no {
-        position: relative;
-      }
-
-      /* once escaping starts, we switch NO to absolute positioning */
-      .btn.no.is-escape {
-        position: absolute;
-      }
+      .btn.no { position: relative; }
+      .btn.no.is-escape { position: absolute; }
 
       .btn:focus-visible {
         box-shadow: 0 0 0 3px rgba(240, 108, 155, 0.22), 0 18px 40px var(--shadow);
       }
 
-      /* YES grows while hovering (capped), plus cute flowers in corners */
       .btn.yes {
         --grow: 1;
         background: linear-gradient(135deg, var(--rose-deep), #ff8bb7);
@@ -235,15 +216,14 @@
         transform-origin: center;
         animation: yesPulse 2.4s ease-in-out infinite;
         isolation: isolate;
-        overflow: visible; /* allow corner photos to expand outward */
+        overflow: visible;
       }
 
-      /* 4 corner mini photos */
       .mini-photos {
         position: absolute;
         inset: 0;
         pointer-events: none;
-        z-index: 4; /* above button */
+        z-index: 4;
         overflow: visible;
       }
 
@@ -272,25 +252,17 @@
         background: transparent;
       }
 
-      /* Place them at the 4 corners of the button */
       .mini-photos .tl { left: 0; top: 0; }
       .mini-photos .tr { right: 0; top: 0; }
       .mini-photos .bl { left: 0; bottom: 0; }
       .mini-photos .br { right: 0; bottom: 0; }
 
-      /* Show them on hover/focus and push them away from the button */
       .btn.yes:hover .mini-photos .mini,
       .btn.yes:focus-visible .mini-photos .mini,
       .btn.yes.is-growing .mini-photos .mini {
         opacity: 0.98;
       }
 
-      /* Clock-rotations:
-         TR = 1:30  -> 45deg
-         BR = 4:30  -> 135deg
-         BL = 7:30  -> 225deg
-         TL = 10:30 -> 315deg
-      */
       .btn.yes:hover .mini-photos .tr,
       .btn.yes:focus-visible .mini-photos .tr,
       .btn.yes.is-growing .mini-photos .tr {
@@ -312,7 +284,6 @@
         transform: translate(-55%, -55%) rotate(315deg) scale(1.06);
       }
 
-      /* the flowers */
       .btn.yes .flowers {
         position: absolute;
         inset: 0;
@@ -332,20 +303,17 @@
         background-repeat: no-repeat;
         background-size: contain;
       }
-      /* bottom-left blossom + vine */
       .btn.yes .flowers::before {
         left: -18px;
         bottom: -18px;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cdefs%3E%3CradialGradient id='p' cx='40%25' cy='40%25' r='70%25'%3E%3Cstop offset='0' stop-color='%23fff4f7'/%3E%3Cstop offset='0.6' stop-color='%23ff8bb7'/%3E%3Cstop offset='1' stop-color='%23f06c9b'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath d='M18 92c22-8 34-24 44-46 10-22 22-34 44-44' fill='none' stroke='%23d65285' stroke-width='5' stroke-linecap='round' opacity='0.55'/%3E%3Ccircle cx='42' cy='70' r='12' fill='url(%23p)' opacity='0.95'/%3E%3Ccircle cx='30' cy='78' r='9' fill='url(%23p)' opacity='0.8'/%3E%3Ccircle cx='52' cy='62' r='9' fill='url(%23p)' opacity='0.8'/%3E%3C/svg%3E");
       }
-      /* top-right blossom */
       .btn.yes .flowers::after {
         right: -18px;
         top: -18px;
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cdefs%3E%3CradialGradient id='p' cx='40%25' cy='40%25' r='70%25'%3E%3Cstop offset='0' stop-color='%23fff4f7'/%3E%3Cstop offset='0.6' stop-color='%23ff8bb7'/%3E%3Cstop offset='1' stop-color='%23f06c9b'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath d='M102 28C80 36 68 52 58 74 48 96 36 108 14 116' fill='none' stroke='%23d65285' stroke-width='5' stroke-linecap='round' opacity='0.45'/%3E%3Ccircle cx='78' cy='50' r='12' fill='url(%23p)' opacity='0.95'/%3E%3Ccircle cx='88' cy='40' r='9' fill='url(%23p)' opacity='0.8'/%3E%3Ccircle cx='68' cy='60' r='9' fill='url(%23p)' opacity='0.8'/%3E%3C/svg%3E");
       }
 
-      /* show flowers when hovering/focusing (and also while growing) */
       .btn.yes:hover .flowers::before,
       .btn.yes:hover .flowers::after,
       .btn.yes:focus-visible .flowers::before,
@@ -367,7 +335,6 @@
         50% { filter: saturate(1.08); }
       }
 
-      /* NO button styling (position switches to absolute after escape arms) */
       .btn.no {
         background: #fff;
         color: var(--rose-dark);
@@ -397,7 +364,46 @@
         font-size: 1.05rem;
       }
 
-      /* (tip removed) */
+      /* === LETTER (added) === */
+      .letter-card{
+        margin-top: 18px;
+        background: rgba(255,255,255,0.72);
+        border: 1px solid rgba(240, 108, 155, 0.22);
+        border-radius: 26px;
+        padding: 18px 18px;
+        text-align: left;
+        max-width: 760px;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 0 18px 44px rgba(208, 74, 116, 0.12);
+        animation: floatIn 0.6s ease forwards;
+      }
+
+      .letter-title{
+        font-family: "Playfair Display", serif;
+        font-size: 1.55rem;
+        margin: 0 0 10px;
+        color: var(--ink);
+      }
+
+      .letter-body{
+        font-size: 1.02rem;
+        line-height: 1.65;
+        color: var(--ink-soft);
+        white-space: pre-wrap;
+      }
+
+      .letter-scroll{
+        max-height: min(56vh, 560px);
+        overflow: auto;
+        padding-right: 6px;
+      }
+
+      .letter-scroll::-webkit-scrollbar{ width: 8px; }
+      .letter-scroll::-webkit-scrollbar-thumb{
+        background: rgba(240,108,155,0.35);
+        border-radius: 999px;
+      }
 
       @keyframes floatIn {
         from { opacity: 0; transform: translateY(10px); }
@@ -424,20 +430,18 @@
       <span class="heart"></span>
     </div>
 
-    <!-- Floating face particles (spawned by JS; same layer as hearts) -->
+    <!-- Floating face particles -->
     <div class="face-float" aria-hidden="true" id="facefield"></div>
 
     <main class="card" role="main">
       <p class="badge">HBIIIIIIIBAAAAAAAAAAAAAAAAAAA DYAAAAAAAAAAALI</p>
       <h1>Would you be my Valentine?</h1>
-      <!-- subtitle deleted -->
 
       <section class="actions" aria-label="Valentine response">
         <button class="btn yes" type="button">
           Yes 💗
           <span class="flowers" aria-hidden="true"></span>
 
-          <!-- 4 corner mini photos (1/4-ish button size). Uses your resources image -->
           <span class="mini-photos" aria-hidden="true">
             <span class="mini tl"><img src="resources/her-face.png" alt="" /></span>
             <span class="mini tr"><img src="resources/her-face.png" alt="" /></span>
@@ -445,32 +449,38 @@
             <span class="mini br"><img src="resources/her-face.png" alt="" /></span>
           </span>
         </button>
+
         <button class="btn no" type="button">No 🙃</button>
       </section>
 
+      <!-- LOVE NOTE + FULL LETTER (added) -->
       <section class="love-note" aria-live="polite" hidden>
-        <h2>Hey hbiba</h2>
+        <h2>Hey hbiba 💗</h2>
         <p>
           Awwww you accepted to be my valentine... like you had a choice hhhhh<br />
           I hardly love you a hbiba
         </p>
+
+        <div class="letter-card" role="article" aria-label="Valentine letter">
+          <h3 class="letter-title">Your Valentine Letter</h3>
+
+          <div class="letter-scroll">
+            <div class="letter-body" id="valentineLetter"></div>
+          </div>
+        </div>
       </section>
     </main>
 
     <script>
       // === Configure your face image here ===
-      // Use a transparent PNG/WebP if you removed the background.
-      // If your file is .jpg, change FACE_SRC accordingly.
       const FACE_SRC = 'resources/her-face.png';
 
-      // Spawn face particles like hearts (same dimension/feeling)
       const facefield = document.getElementById('facefield');
 
       function createFaceImg() {
         const img = document.createElement('img');
         img.src = FACE_SRC;
         img.alt = '';
-        // graceful fallback if someone keeps a .jpg name instead
         img.onerror = () => {
           if (!img.dataset.fallbackTried) {
             img.dataset.fallbackTried = '1';
@@ -481,48 +491,63 @@
       }
 
       function spawnFace() {
-  	if (!facefield) return;
+        if (!facefield) return;
 
-  	const d = document.createElement('div');
-  	d.className = 'face';
-  	d.appendChild(createFaceImg());
+        const d = document.createElement('div');
+        d.className = 'face';
+        d.appendChild(createFaceImg());
 
-  	const left = Math.random() * 100;
+        const left = Math.random() * 100;
 
-  // ✅ last longer (increase duration range)
-  const dur = 25 + Math.random() * 14;   // ~22s to 36s (longer than before)
-  const delay = 0;     // slightly smaller delay so they start sooner
-  const size = 66 + Math.random() * 68;
+        // longer duration
+        const dur = 25 + Math.random() * 14; // ~25s to 39s
+        const delay = 0;
+        const size = 66 + Math.random() * 68;
 
-  	d.style.left = left + 'vw';
-  	d.style.bottom = (-20 - Math.random() * 30) + 'px';
-  	d.style.width = size + 'px';
-  	d.style.animationDuration = dur + 's';
-  	d.style.animationDelay = delay + 's';
+        d.style.left = left + 'vw';
+        d.style.bottom = (-20 - Math.random() * 30) + 'px';
+        d.style.width = size + 'px';
+        d.style.animationDuration = dur + 's';
+        d.style.animationDelay = delay + 's';
 
-  	facefield.appendChild(d);
-  	setTimeout(() => d.remove(), (dur + delay) * 1000 + 300);
-	}
+        facefield.appendChild(d);
+        setTimeout(() => d.remove(), (dur + delay) * 1000 + 300);
+      }
 
-// ✅ appear more often (decrease interval)
-for (let i = 0; i < 10; i++) spawnFace();     // was 3
-setInterval(spawnFace, 650);                 // was 1400
-
-
-      // kick off faces
-      for (let i = 0; i < 3; i++) spawnFace();
-      setInterval(spawnFace, 1400);
+      // spawn faces (kept once — removed duplicate spawner)
+      for (let i = 0; i < 10; i++) spawnFace();
+      setInterval(spawnFace, 650);
 
       const noButton = document.querySelector('.btn.no');
       const yesButton = document.querySelector('.btn.yes');
       const actions = document.querySelector('.actions');
       const loveNote = document.querySelector('.love-note');
 
+      // Letter injection (added)
+      const letterBox = document.getElementById('valentineLetter');
+
+      const LETTER_TEXT = `Assia,
+
+Before love had a name between us before it became habits like I miss you and m mad at you hhhhhh there were just two people yapping endlessly not knowing it would turn into something this crazy this intense
+We were just talking and somehow those random talks became the most important part of my days sometimes I scroll back to when we used to talk every single night until it was almost morning when sleep didn’t matter
+It was insane how we didn’t just tell each other memories we made each other relive them we shared pieces of ourselves without even realizing how attached we were becoming
+You really casted a spell on me you made me obsessed with you in the most beautiful way I didn’t notice when you stopped being just someone I talk to and became someone I can’t imagine my days without
+You became my peace and I don’t say peace like life suddenly became perfect but peace like life stopped feeling pointless like I finally had something to protect something to build someone to care about someone who brings light into my existence
+Today is our first Valentine together and I don’t want it to be just a date I want it to repeat again and again and again I want to grow with you experience every version of life with you
+I’m happy that I can finally say everything without holding back without being scared that my feelings are too much or because some dumbass dont feel the same 
+And even if my words don’t sound warm enough even if they don’t fully reflect what’s inside me trust me my feelings are way bigger than these sentences
+If I tried to describe exactly how accurate and intense I feel about you I’d need a whole dictionary just to name every emotion every thought every little detail that reminds me of you
+Honey I love you very much a love that feels like those romantic stories people think are exaggerated a love that writers would get inspired by and scientists would try to understand
+Our love isn’t just in the big moments it’s in the small ones It’s in the way you sleep peacefully in the way you giggle in the way you think of me during big events good or bad
+In that flower you’ll put next to your head so you can see it everytime you wake up and when you miss me and in everytime you are mad unsure or angry it will reassure you and make you remember how much I love you 
+
+Happy Valentine’s Day, my baby.
+And I hope this is just the first of many, many more together`;
+
       // YES: grow while hovered (capped), and show flowers while growing.
-      // This is a continuous growth (not just a one-time animation).
-      const GROW_MAX = 1.22;     // cap
-      const GROW_STEP = 0.008;   // per tick
-      const GROW_TICK_MS = 16;   // ~60fps
+      const GROW_MAX = 1.22;
+      const GROW_STEP = 0.008;
+      const GROW_TICK_MS = 16;
 
       let grow = 1;
       let growTimer = null;
@@ -538,7 +563,6 @@ setInterval(spawnFace, 650);                 // was 1400
         if (growTimer) return;
         growTimer = setInterval(() => {
           setYesGrow(grow + GROW_STEP);
-          // tiny extra saturation as it grows
           yesButton.style.filter = `brightness(1.02) saturate(${1 + (grow - 1) * 0.8})`;
         }, GROW_TICK_MS);
       }
@@ -547,7 +571,6 @@ setInterval(spawnFace, 650);                 // was 1400
         if (!growTimer) return;
         clearInterval(growTimer);
         growTimer = null;
-        // ease back to normal
         const back = setInterval(() => {
           if (grow <= 1.001) {
             clearInterval(back);
@@ -564,24 +587,17 @@ setInterval(spawnFace, 650);                 // was 1400
       yesButton.addEventListener('focus', startGrowing);
       yesButton.addEventListener('blur', stopGrowing);
 
-      // NO: smarter escape so it never gets stuck in corners.
-      // Strategy: attempt multiple candidate positions and pick the one FARTHER from the pointer,
-      // while always staying inside bounds with padding.
+      // NO: escape
       function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
 
       function armNoEscape() {
-        // Switch to absolute while keeping the same on-screen position,
-        // so the first load shows YES/NO centered side-by-side.
         if (noButton.classList.contains('is-escape')) return;
 
         const a = actions.getBoundingClientRect();
         const b = noButton.getBoundingClientRect();
 
         noButton.classList.add('is-escape');
-        // lock width so layout doesn't jump
         noButton.style.width = `${b.width}px`;
-
-        // position relative to actions
         noButton.style.left = `${b.left - a.left}px`;
         noButton.style.top = `${b.top - a.top}px`;
       }
@@ -592,18 +608,15 @@ setInterval(spawnFace, 650);                 // was 1400
         const bounds = actions.getBoundingClientRect();
         const buttonBounds = noButton.getBoundingClientRect();
 
-        // padding so it doesn't "kiss" the edges and get stuck
         const pad = 10;
         const maxX = bounds.width - buttonBounds.width - pad * 2;
         const maxY = bounds.height - buttonBounds.height - pad * 2;
 
-        // pointer position in actions coords (fallback: center)
         const px = (typeof pointerClientX === 'number') ? (pointerClientX - bounds.left) : bounds.width / 2;
         const py = (typeof pointerClientY === 'number') ? (pointerClientY - bounds.top) : bounds.height / 2;
 
         let best = { x: 0, y: 0, score: -Infinity };
 
-        // Try a few random spots and keep the farthest from the pointer
         for (let i = 0; i < 14; i++) {
           const rx = pad + Math.random() * Math.max(0, maxX);
           const ry = pad + Math.random() * Math.max(0, maxY);
@@ -611,7 +624,6 @@ setInterval(spawnFace, 650);                 // was 1400
           const by = ry + buttonBounds.height / 2;
           const dist = Math.hypot(bx - px, by - py);
 
-          // prefer not-too-close and also avoid being near edges
           const edgePenalty =
             (Math.min(rx, (pad + maxX) - rx) / (pad + maxX + 0.001)) +
             (Math.min(ry, (pad + maxY) - ry) / (pad + maxY + 0.001));
@@ -620,7 +632,6 @@ setInterval(spawnFace, 650);                 // was 1400
           if (score > best.score) best = { x: rx, y: ry, score };
         }
 
-        // In rare cases (tiny screens) maxX/maxY can be 0/negative; clamp safely
         const finalX = clamp(best.x, pad, pad + Math.max(0, maxX));
         const finalY = clamp(best.y, pad, pad + Math.max(0, maxY));
 
@@ -638,10 +649,8 @@ setInterval(spawnFace, 650);                 // was 1400
         );
       }
 
-      // Escape when you get close (prevents corner-stuck feeling)
       actions.addEventListener('mousemove', (e) => {
         if (!loveNote.hidden) return;
-        const bounds = actions.getBoundingClientRect();
         const b = noButton.getBoundingClientRect();
         const bx = b.left + b.width / 2;
         const by = b.top + b.height / 2;
@@ -662,7 +671,6 @@ setInterval(spawnFace, 650);                 // was 1400
         moveNoButton();
       });
 
-      // mobile touch: dodge
       noButton.addEventListener('touchstart', (e) => {
         if (!loveNote.hidden) return;
         e.preventDefault();
@@ -671,8 +679,6 @@ setInterval(spawnFace, 650);                 // was 1400
       }, { passive: false });
 
       window.addEventListener('load', () => {
-        // IMPORTANT: do NOT move the NO button on first load.
-        // Keep both buttons centered next to each other.
         setYesGrow(1);
       });
       window.addEventListener('resize', () => moveNoButton());
@@ -680,8 +686,11 @@ setInterval(spawnFace, 650);                 // was 1400
       function activateLoveNote() {
         loveNote.hidden = false;
         actions.style.display = 'none';
-        // stop growth loop cleanly
         stopGrowing();
+
+        if (letterBox) letterBox.textContent = LETTER_TEXT;
+
+        loveNote.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
 
       yesButton.addEventListener('click', activateLoveNote);
